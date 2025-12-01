@@ -2,7 +2,7 @@
 Workflow nodes for Stage 1 Baseline RAG Agent.
 
 This demonstrates the BASELINE approach - INFORMATION OVERLOAD!
-Students will see the problems with returning EVERYTHING:
+You'll see the problems with loading everything to the agent's context:
 - Full course details including syllabi for ALL 5 courses
 - Massive token waste (~6,000+ tokens)
 - LLM struggles with too much information
@@ -21,7 +21,7 @@ from langchain_openai import ChatOpenAI
 
 # Suppress httpx INFO logs
 logging.getLogger("httpx").setLevel(logging.WARNING)
-from langchain_core.messages import HumanMessage
+from langchain_core.messages import HumanMessage, SystemMessage
 
 from redis_context_course import CourseManager
 from redis_context_course.hierarchical_context import RawContextAssembler
@@ -35,6 +35,32 @@ logger = logging.getLogger("stage1-baseline")
 # Global course manager and hierarchical courses
 course_manager: Optional[CourseManager] = None
 hierarchical_courses = []
+
+
+# System instructions hook
+# -------------------------
+#
+# We keep a minimal default that just says this is a basic
+# course advisor. Notebook "Crafting effective system prompts"
+# can then build richer instructions (identity, capabilities,
+# behavior, constraints) and set them via set_system_instructions.
+
+SYSTEM_INSTRUCTIONS = (
+    "You are a helpful course advisor assistant. "
+    "Answer questions using only the course information provided."
+)
+
+
+def set_system_instructions(instructions: str) -> None:
+    """Override the system instructions used by the Stage 1 agent.
+
+    This is intended to be called from teaching notebooks after
+    students design better system prompts. It mirrors the patterns
+    from the system-instructions notebook (role, capabilities,
+    behavior, constraints) without requiring them to edit this file.
+    """
+    global SYSTEM_INSTRUCTIONS
+    SYSTEM_INSTRUCTIONS = instructions
 
 
 def initialize_nodes(manager: CourseManager):
@@ -73,16 +99,7 @@ def initialize_nodes(manager: CourseManager):
 
 def research_node(state: AgentState) -> AgentState:
     """
-    Research node - performs semantic search and returns EVERYTHING.
-
-    THIS IS THE PROBLEM: INFORMATION OVERLOAD!
-    - Returns FULL course details including syllabi for ALL 5 courses
-    - Massive token waste (~6,000+ tokens vs ~700 with hierarchical)
-    - LLM gets overwhelmed with too much information
-    - No progressive disclosure - everything all at once
-    - Includes details for courses user doesn't even care about
-
-    Students will see why hierarchical retrieval and progressive disclosure matter.
+    Research node - performs semantic search and loads everything into context.
     """
     start_time = time.perf_counter()
     query = state["query"]
@@ -187,18 +204,24 @@ def synthesize_node(state: AgentState) -> AgentState:
         # Initialize LLM
         llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
-        # Create prompt with raw context
-        prompt = f"""You are a helpful course advisor assistant. Answer the student's question based on the course information provided.
-
-Course Information (raw data):
-{context}
-
-Student Question: {query}
-
-Please provide a clear, helpful answer based on the course information above."""
+        # We follow the same structure as the "Crafting effective
+        # system prompts" notebook: a SystemMessage for the
+        # persistent instructions plus a HumanMessage for the
+        # concrete user request and retrieved context.
+        messages = [
+            SystemMessage(content=SYSTEM_INSTRUCTIONS),
+            HumanMessage(
+                content=(
+                    "Course Information (raw data):\n"
+                    f"{context}\n\n"
+                    f"Student Question: {query}\n\n"
+                    "Please provide a clear, helpful answer based on the course information above."
+                )
+            ),
+        ]
 
         # Get LLM response
-        response = llm.invoke([HumanMessage(content=prompt)])
+        response = llm.invoke(messages)
         answer = response.content
 
         synthesis_time = (time.perf_counter() - start_time) * 1000

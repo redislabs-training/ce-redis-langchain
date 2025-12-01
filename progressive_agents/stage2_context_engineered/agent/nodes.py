@@ -37,7 +37,6 @@ from .state import AgentState
 # Configure logger
 logger = logging.getLogger("stage2-engineered")
 
-# Global course manager and hierarchical courses
 course_manager: Optional[CourseManager] = None
 hierarchical_courses = []
 
