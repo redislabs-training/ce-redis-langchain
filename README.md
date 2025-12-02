@@ -58,3 +58,15 @@ graph LR
 
 ---
 
+## Getting Started
+
+To begin exploring context engineering with Redis and LangChain:
+
+1. **Prerequisites**: You'll need an OpenAI API key. Get one at [platform.openai.com](https://platform.openai.com/api-keys).
+
+2. **Start with Stage 1**: Visit the Stage 1 notebooks in the `progressive_agents/` directory.
+
+3. **Run in Google Colab**: Each notebook can be opened and executed directly in Google Colab for a seamless learning experience.
+
+---
+
