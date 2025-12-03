@@ -66,16 +66,5 @@ To begin exploring context engineering with Redis and LangChain:
 1. **Prerequisites**: You'll need an OpenAI API key. Get one at [platform.openai.com](https://platform.openai.com/api-keys).
 
 2. **Start with the first notebook**: Start with the first notebook (01) in the `section-1-context-engineering-fundamentals` directory.
-
-3. **Run in Google Colab**: Each notebook can be opened and executed directly in Google Colab for a seamless learning experience. Due to the limited capability of running multiple notebooks in Google Colab, you will need to copy the contents of the repository into the instance to be able to access the agent for every notebook after 02_project_overview.
-
-   To do so, open the terminal and run the following:
-
-   ```bash
-      git clone https://github.com/redislabs-training/ce-redis-langchain.git
-   ```
-
-   Now the notebook will be ready! We know this may be a pain, but don't worry, once we port this over to Redis University, the process will be streamlined.
-
 ---
 
