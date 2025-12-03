@@ -12,7 +12,7 @@
 
 ---
 
-> **📢 Note:** This course is currently in **BETA**. Additional components and stages will be released in the near future, so please check back regularly for updates. This course will eventually be migrated as a lab to [Redis University](https://university.redis.com/).
+> **📢 Note:** This course is currently in **Development**. Additional components and stages will be released in the near future, so please check back regularly for updates. This course will eventually be migrated as a lab to [Redis University](https://university.redis.com/).
 
 ---
 
@@ -47,9 +47,10 @@ graph LR
 
 | Stage | Key Feature | Overview | Status |
 |-------|-------------|----------------|--------|
-| **0** | System Context | Constructing effective system prompts | Available |
-| **1** | Baseline RAG | Exploring a basic RAG that consumes Raw JSON context | Available |
-| **2** | Context Engineering | Context engineered RAG with 50% less token usage | Available |
+| **Intro** | Getting Acquainted | An overview of context engineering | Available |
+| **0** | System Context | Constructing effective system prompts | Coming Soon |
+| **1** | Baseline RAG | Exploring a basic RAG that consumes Raw JSON context | Agent Available, Notebook Coming Soon |
+| **2** | Context Engineering | Context engineered RAG with 50% less token usage | Agent Available, Notebook Coming Soon |
 | **3** | Full Agent | A full LangGraph-based agent with intent classification, quality and eval | Coming Soon |
 | **4** | Hybrid Search | Adding NER + FilterQuery for exact course codes | Coming Soon |
 | **4R** | + ReAct | Visible reasoning trace | Coming Soon |
