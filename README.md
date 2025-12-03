@@ -49,8 +49,8 @@ graph LR
 |-------|-------------|----------------|--------|
 | **Intro** | Getting Acquainted | An overview of context engineering | Available |
 | **0** | System Context | Constructing effective system prompts | Coming Soon |
-| **1** | Baseline RAG | Exploring a basic RAG that consumes Raw JSON context | Coming Soon |
-| **2** | Context Engineering | Context engineered RAG with 50% less token usage | Coming Soon |
+| **1** | Baseline RAG | Exploring a basic RAG that consumes Raw JSON context | Agent Code Avaliable, Notebook Coming Soon |
+| **2** | Context Engineering | Context engineered RAG with 50% less token usage | Agent Code Avaliable, Notebook Coming Soon |
 | **3** | Full Agent | A full LangGraph-based agent with intent classification, quality and eval | Coming Soon |
 | **4** | Hybrid Search | Adding NER + FilterQuery for exact course codes | Coming Soon |
 | **4R** | + ReAct | Visible reasoning trace | Coming Soon |
@@ -66,5 +66,6 @@ To begin exploring context engineering with Redis and LangChain:
 1. **Prerequisites**: You'll need an OpenAI API key. Get one at [platform.openai.com](https://platform.openai.com/api-keys).
 
 2. **Start with the first notebook**: Start with the first notebook (01) in the `section-1-context-engineering-fundamentals` directory.
+
 ---
 
